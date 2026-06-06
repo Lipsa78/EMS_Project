@@ -150,7 +150,7 @@ const LeaveRequest = () => {
 
       await axios.put(
 
-        `http://localhost:8080/leaves/approve/${id}`,
+        `http://localhost:8082/leaves/approve/${id}`,
 
         {},
 
@@ -179,7 +179,7 @@ const LeaveRequest = () => {
 
       await axios.put(
 
-        `http://localhost:8080/leaves/reject/${id}`,
+        `http://localhost:8082/leaves/reject/${id}`,
 
         {},
 

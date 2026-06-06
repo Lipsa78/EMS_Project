@@ -19,79 +19,48 @@ public class EmployeeService {
     private EmployeeRepository repo;
 
     // ENTITY → DTO CONVERSION
+    private EmployeeDTO convertToDTO(Employee employee) {
 
-    private EmployeeDTO convertToDTO(
-            Employee employee) {
+        EmployeeDTO dto = new EmployeeDTO();
 
-        EmployeeDTO dto =
-                new EmployeeDTO();
+        dto.setEmployeeId(employee.getEmployeeId());
+        dto.setFirstName(employee.getFirstName());
+        dto.setLastName(employee.getLastName());
+        dto.setGender(employee.getGender());
+        dto.setDateOfBirth(employee.getDateOfBirth());
+        dto.setEmail(employee.getEmail());
+        dto.setPhone(employee.getPhone());
+        dto.setAddress(employee.getAddress());
+        dto.setDesignation(employee.getDesignation());
+        dto.setJoiningDate(employee.getJoiningDate());
+        dto.setSalary(employee.getSalary());
+        dto.setProfileImage(employee.getProfileImage());
+        dto.setStatus(employee.getStatus());
 
-        dto.setEmployeeId(
-                employee.getEmployeeId());
-
-        dto.setFirstName(
-                employee.getFirstName());
-
-        dto.setLastName(
-                employee.getLastName());
-
-        dto.setGender(
-                employee.getGender());
-
-        dto.setDateOfBirth(
-                employee.getDateOfBirth());
-
-        dto.setEmail(
-                employee.getEmail());
-
-        dto.setPhone(
-                employee.getPhone());
-
-        dto.setAddress(
-                employee.getAddress());
-
-        dto.setDesignation(
-                employee.getDesignation());
-
-        dto.setJoiningDate(
-                employee.getJoiningDate());
-
-        dto.setSalary(
-                employee.getSalary());
-
-        dto.setProfileImage(
-                employee.getProfileImage());
-
-        dto.setStatus(
-                employee.getStatus());
+        // Department Name
+        if (employee.getDepartment() != null) {
+            dto.setDepartmentName(
+                    employee.getDepartment().getDepartmentName());
+        }
 
         return dto;
     }
 
     // GET ALL EMPLOYEES
+    public List<EmployeeDTO> getAllEmployees() {
 
-    public List<EmployeeDTO>
-    getAllEmployees() {
-
-        List<Employee> employees =
-                repo.findAll();
+        List<Employee> employees = repo.findAll();
 
         return employees.stream()
-
                 .map(this::convertToDTO)
-
                 .toList();
     }
 
     // GET EMPLOYEE BY ID
-
-    public EmployeeDTO
-    getEmployeeById(Long id) {
+    public EmployeeDTO getEmployeeById(Long id) {
 
         Employee employee = repo.findById(id)
-
                 .orElseThrow(() ->
-
                         new ResourceNotFoundException(
                                 "Employee not found"));
 
@@ -99,24 +68,18 @@ public class EmployeeService {
     }
 
     // SAVE EMPLOYEE
-
-    public Employee saveEmployee(
-            Employee employee) {
-
+    public Employee saveEmployee(Employee employee) {
         return repo.save(employee);
     }
 
     // UPDATE EMPLOYEE
-
     public Employee updateEmployee(
             Long id,
             Employee employee) {
 
         Employee existingEmployee =
                 repo.findById(id)
-
                         .orElseThrow(() ->
-
                                 new ResourceNotFoundException(
                                         "Employee not found"));
 
@@ -160,15 +123,11 @@ public class EmployeeService {
     }
 
     // DELETE EMPLOYEE
-
-    public String deleteEmployee(
-            Long id) {
+    public String deleteEmployee(Long id) {
 
         Employee employee =
                 repo.findById(id)
-
                         .orElseThrow(() ->
-
                                 new ResourceNotFoundException(
                                         "Employee not found"));
 
@@ -176,31 +135,31 @@ public class EmployeeService {
 
         return "Employee Deleted Successfully";
     }
-    public List<Employee>
-    searchEmployee(String keyword) {
 
-        return repo
-                .findByFirstNameContaining(
-                        keyword);
+    // SEARCH EMPLOYEE
+    public List<Employee> searchEmployee(
+            String keyword) {
+
+        return repo.findByFirstNameContaining(
+                keyword);
     }
-    public List<Employee>
-    getEmployeesByStatus(
-    String status){
 
-     return repo
-     .findByStatus(status);
-    }
-    
- // FILTER EMPLOYEE
-
-    public List<Employee>
-    filterByStatus(String status){
+    // FILTER EMPLOYEE
+    public List<Employee> getEmployeesByStatus(
+            String status) {
 
         return repo.findByStatus(status);
     }
 
-	public Page<Employee> getEmployeesWithPagination(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public List<Employee> filterByStatus(
+            String status) {
+
+        return repo.findByStatus(status);
+    }
+
+    public Page<Employee> getEmployeesWithPagination(
+            Pageable pageable) {
+
+        return repo.findAll(pageable);
+    }
 }

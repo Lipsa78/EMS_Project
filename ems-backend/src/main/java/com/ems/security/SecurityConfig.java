@@ -3,61 +3,42 @@ package com.ems.security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.http.HttpMethod;
 
-import org.springframework.security.config.annotation.
-web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
-import org.springframework.security.config.http.
-SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import org.springframework.security.crypto.bcrypt.
-BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import org.springframework.security.web.
-SecurityFilterChain;
-
-import org.springframework.security.web.
-authentication.
-UsernamePasswordAuthenticationFilter;
-
-import org.springframework.web.cors.
-CorsConfiguration;
-
-import org.springframework.web.cors.
-CorsConfigurationSource;
-
-import org.springframework.web.cors.
-UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-
 public class SecurityConfig {
 
     @Autowired
     private JwtFilter jwtFilter;
 
     @Bean
-    public BCryptPasswordEncoder
-    passwordEncoder() {
-
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public CorsConfigurationSource
-    corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of(
-                        "http://localhost:3000"));
+                List.of("http://localhost:3000"));
 
         configuration.setAllowedMethods(
                 List.of(
@@ -84,18 +65,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain
-    securityFilterChain(
+    public SecurityFilterChain securityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
-
             .csrf(csrf -> csrf.disable())
 
-            .cors(cors ->
-                    cors.configurationSource(
-                            corsConfigurationSource()))
+            .cors(cors -> cors.configurationSource(
+                    corsConfigurationSource()))
 
             .authorizeHttpRequests(auth -> auth
 
@@ -105,41 +83,19 @@ public class SecurityConfig {
                 .permitAll()
 
                 .requestMatchers(
-
                         "/auth/**",
-
-                        "/uploads/**"
-
+                        "/uploads/**",
+                        "/employees/**"
                 )
-
                 .permitAll()
-
-                .requestMatchers("/employees/**")
-                .hasAnyRole(
-                        "ADMIN",
-                        "HR",
-                        "EMPLOYEE")
-
-                .requestMatchers("/attendance/**")
-                .hasAnyRole(
-                        "ADMIN",
-                        "HR",
-                        "EMPLOYEE")
-
-                .requestMatchers("/leaves/**")
-                .hasAnyRole(
-                        "ADMIN",
-                        "HR",
-                        "EMPLOYEE")
 
                 .anyRequest()
                 .authenticated()
             )
 
             .sessionManagement(session ->
-
-                session.sessionCreationPolicy(
-                        SessionCreationPolicy.STATELESS))
+                    session.sessionCreationPolicy(
+                            SessionCreationPolicy.STATELESS))
 
             .addFilterBefore(
                     jwtFilter,

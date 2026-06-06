@@ -1,5 +1,9 @@
+import "./Employees.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import { FaUsers, FaUserCheck, FaUserTimes } from "react-icons/fa";
 
 function Employees() {
 
@@ -7,8 +11,9 @@ function Employees() {
   // STATES
   // =========================
 
-  const [employees, setEmployees] =
-    useState([]);
+  const navigate = useNavigate();
+
+  const [employees, setEmployees] = useState([]);
 
   const [keyword, setKeyword] =
     useState("");
@@ -305,7 +310,7 @@ function Employees() {
 
     await axios.put(
 
-      `http://localhost:8080/employees/${editingEmployee.employeeId}`,
+      `http://localhost:8082/employees/${editingEmployee.employeeId}`,
 
       updatedEmployee,
 
@@ -347,7 +352,7 @@ function Employees() {
 
       await axios.delete(
 
-        `http://localhost:8080/employees/${id}`,
+        `http://localhost:8082/employees/${id}`,
 
         {
           headers: {
@@ -383,7 +388,7 @@ function Employees() {
       const response =
         await axios.get(
 
-          `http://localhost:8080/employees/search?keyword=${keyword}`,
+          `http://localhost:8082/employees/search?keyword=${keyword}`,
 
           {
             headers: {
@@ -423,7 +428,7 @@ function Employees() {
         const response =
           await axios.get(
 
-            `http://localhost:8080/employees/status?status=${status}`,
+            `http://localhost:8082/employees/status?status=${status}`,
 
             {
               headers: {
@@ -445,21 +450,190 @@ function Employees() {
 
   return (
 
-    <div style={{
-      padding: "20px"
-    }}>
+ <div style={{
+  display: "flex"
+}}>
 
-      <h1>
-        Employee Management
-      </h1>
+  <Sidebar />
 
-      {/* FORM */}
+  <div style={{
+  flex: 1,
+  padding: "20px",
+  background: "#f5f7fb"
+}}>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }}
+>
+  <h1>Employee Management</h1>
+
+  <button
+    onClick={() => navigate("/add-employee")}
+    style={{
+      background: "#2563eb",
+      color: "white",
+      border: "none",
+      padding: "10px 20px",
+      borderRadius: "8px",
+      cursor: "pointer"
+    }}
+  >
+    + Add Employee
+  </button>
+</div>
 
       <div style={{
-        border: "1px solid gray",
-        padding: "20px",
-        marginBottom: "20px"
-      }}>
+  display: "flex",
+  gap: "20px",
+  marginBottom: "20px"
+}}>
+
+<div style={{
+  flex: 1,
+  background: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+}}>
+
+  <div style={{
+    display:"flex",
+    alignItems:"center",
+    gap:"15px"
+  }}>
+
+    <FaUsers
+      size={35}
+      color="#2563eb"
+    />
+
+    <div>
+      <h3>Total Employees</h3>
+      <h2>{employees.length}</h2>
+    </div>
+
+  </div>
+
+</div>
+
+ <div style={{
+  flex: 1,
+  background: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+}}>
+
+  <div style={{
+    display:"flex",
+    alignItems:"center",
+    gap:"15px"
+  }}>
+
+    <FaUserCheck
+      size={35}
+      color="green"
+    />
+
+    <div>
+      <h3>Active Employees</h3>
+
+      <h2>
+        {
+          employees.filter(
+            emp => emp.status === "ACTIVE"
+          ).length
+        }
+      </h2>
+    </div>
+
+  </div>
+
+</div>
+
+  <div style={{
+    flex: 1,
+    background: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+  }}>
+    <div style={{
+  flex: 1,
+  background: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+}}>
+
+  <div style={{
+    display:"flex",
+    alignItems:"center",
+    gap:"15px"
+  }}>
+
+    <FaUserTimes
+      size={35}
+      color="red"
+    />
+
+    <div>
+      <h3>Inactive Employees</h3>
+
+      <h2>
+        {
+          employees.filter(
+            emp => emp.status === "INACTIVE"
+          ).length
+        }
+      </h2>
+    </div>
+
+  </div>
+
+</div>
+    <h2>
+      {
+        employees.filter(
+          emp => emp.status === "INACTIVE"
+        ).length
+      }
+    </h2>
+  </div>
+
+</div>
+      <div style={{
+  marginBottom: "20px",
+  display: "flex",
+  justifyContent: "flex-end"
+}}>
+  <input
+    type="text"
+    placeholder="Search employee..."
+    value={keyword}
+    onChange={(e) => setKeyword(e.target.value)}
+    style={{
+      padding: "10px",
+      width: "250px"
+    }}
+  />
+
+  <button
+    onClick={searchEmployee}
+    style={{
+      marginLeft: "10px"
+    }}
+  >
+    Search
+  </button>
+ </div>
+      {/* FORM */}
+<div style={{
+  display: "none"
+}}>
 
         <h2>
 
@@ -688,14 +862,29 @@ function Employees() {
       </div>
 
       {/* TABLE */}
-
-      <table
-        border="1"
-        width="100%"
-        cellPadding="10"
-      >
-
-        <thead>
+  <div
+  style={{
+    background: "white",
+    padding: "25px",
+    borderRadius: "15px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+    overflowX: "auto",
+    marginTop: "20px"
+  }}
+>
+   <table
+  style={{
+    width: "100%",
+    borderCollapse: "collapse"
+  }}
+>
+<thead
+  style={{
+    background: "#2563eb",
+    color: "white",
+    height: "55px"
+  }}
+>
 
           <tr>
 
@@ -722,36 +911,51 @@ function Employees() {
 
           {employees.map((emp) => (
 
-            <tr
-              key={emp.employeeId}
-            >
-
+           <tr
+  key={emp.employeeId}
+  style={{
+    borderBottom: "1px solid #e5e7eb"
+  }}
+>
+<td
+  style={{
+    padding: "12px",
+    textAlign: "center"
+  }}
+>
+  {emp.employeeId}
+</td>
               <td>
-                {emp.employeeId}
+<img
+  src={`http://localhost:8082${emp.profileImage}`}
+  alt="profile"
+  width="50"
+  height="50"
+  style={{
+    borderRadius: "50%",
+    objectFit: "cover"
+  }}
+/>
+
               </td>
 
-              <td>
+           <td
+  style={{
+    padding: "12px",
+    textAlign: "center"
+  }}
+>
+  {emp.firstName}
+</td>
 
-                <img
-
-                  src={`http://localhost:8080${emp.profileImage}`}
-
-                  alt="profile"
-
-                  width="50"
-
-                  height="50"
-                />
-
-              </td>
-
-              <td>
-                {emp.firstName}
-              </td>
-
-              <td>
-                {emp.lastName}
-              </td>
+            <td
+  style={{
+    padding: "12px",
+    textAlign: "center"
+  }}
+>
+  {emp.lastName}
+</td>
 
               <td>
                 {emp.gender}
@@ -785,23 +989,42 @@ function Employees() {
                 ₹{emp.salary}
               </td>
 
+             <td>
+  <span
+    style={{
+      background:
+        emp.status === "ACTIVE"
+          ? "#dcfce7"
+          : "#fee2e2",
+      color:
+        emp.status === "ACTIVE"
+          ? "#166534"
+          : "#991b1b",
+      padding: "6px 12px",
+      borderRadius: "20px",
+      fontSize: "12px",
+      fontWeight: "bold"
+    }}
+  >
+    {emp.status}
+  </span>
+</td>
               <td>
-                {emp.status}
-              </td>
-
-              <td>
-
-                <button
-                  onClick={() =>
-                    setEditingEmployee(
-                      emp
-                    )
-                  }
-                >
-
-                  Edit
-
-                </button>
+<button
+  onClick={() =>
+    setEditingEmployee(emp)
+  }
+  style={{
+    background: "#2563eb",
+    color: "white",
+    border: "none",
+    padding: "8px 12px",
+    borderRadius: "6px",
+    cursor: "pointer"
+  }}
+>
+  Edit
+</button>
 
                 <button
 
@@ -811,10 +1034,15 @@ function Employees() {
                     )
                   }
 
-                  style={{
-                    marginLeft:
-                      "10px"
-                  }}
+               style={{
+  marginLeft: "10px",
+  background: "#dc2626",
+  color: "white",
+  border: "none",
+  padding: "8px 12px",
+  borderRadius: "6px",
+  cursor: "pointer"
+}}
                 >
 
                   Delete
@@ -829,9 +1057,12 @@ function Employees() {
 
         </tbody>
 
-      </table>
+     </table>
 
-    </div>
+  </div>
+  </div>
+  </div>
+
   );
 }
 

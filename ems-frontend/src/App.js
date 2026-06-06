@@ -1,77 +1,89 @@
 import React from "react";
-
 import {
   BrowserRouter,
   Routes,
   Route
-}
-from "react-router-dom";
+} from "react-router-dom";
 
-import Login
-from "./pages/Login";
-
-import Dashboard
-from "./pages/Dashboard";
-
-import ProtectedRoute
-from "./routes/ProtectedRoute";
-import Department
-from "./pages/Department";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Department from "./pages/Department";
 import Attendance from "./pages/Attendance";
 import Employees from "./pages/Employees";
 import LeaveRequest from "./pages/LeaveRequest";
+import AddEmployee from "./pages/AddEmployee";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 function App() {
-
   return (
-
     <BrowserRouter>
 
       <Routes>
 
-        {/* Login Page */}
-
+        {/* Login */}
         <Route
           path="/"
           element={<Login />}
         />
 
-        {/* Protected Dashboard */}
-
+        {/* Dashboard */}
         <Route
           path="/dashboard"
-
           element={
             <ProtectedRoute>
-
               <Dashboard />
-
             </ProtectedRoute>
           }
         />
-<Route
 
- path="/departments"
-
- element={
-
-   <ProtectedRoute>
-
-      <Department />
-
-   </ProtectedRoute>
- }
-/>
+        {/* Employees */}
         <Route
-        path="/employees"
-        element={<Employees />}
+          path="/employees"
+          element={
+            <ProtectedRoute>
+              <Employees />
+            </ProtectedRoute>
+          }
         />
+
+        {/* Departments */}
         <Route
-        path="/attendance"
-        element={<Attendance />}
-      />
-<Route
- path="/leaves"
- element={<LeaveRequest />}
+          path="/departments"
+          element={
+            <ProtectedRoute>
+              <Department />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Attendance */}
+        <Route
+          path="/attendance"
+          element={
+            <ProtectedRoute>
+              <Attendance />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Leave */}
+        <Route
+          path="/leaves"
+          element={
+            <ProtectedRoute>
+              <LeaveRequest />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+  path="/add-employee"
+  element={
+    <ProtectedRoute>
+      <AddEmployee />
+    </ProtectedRoute>
+  }
 />
       </Routes>
 
