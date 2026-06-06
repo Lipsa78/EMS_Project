@@ -30,10 +30,7 @@ public class EmployeeDTO {
 
     private String status;
 
-    // NEW FIELD
     private String departmentName;
-
-    // GETTERS & SETTERS
 
     public Long getEmployeeId() {
         return employeeId;
@@ -138,8 +135,6 @@ public class EmployeeDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    // Department Name Getter Setter
 
     public String getDepartmentName() {
         return departmentName;

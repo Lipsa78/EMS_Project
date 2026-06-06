@@ -37,10 +37,6 @@ public class EmployeeController {
     @Autowired
     private FileUploadService fileUploadService;
 
-    // =========================
-    // ADD EMPLOYEE WITH IMAGE
-    // =========================
-
     @PostMapping(
     	    consumes =
     	    MediaType.MULTIPART_FORM_DATA_VALUE
@@ -118,7 +114,6 @@ public class EmployeeController {
         employee.setSalary(salary);
         employee.setStatus(status);
 
-        // DATE SAFE
 
         if(dateOfBirth != null &&
            !dateOfBirth.isEmpty()) {
@@ -134,7 +129,6 @@ public class EmployeeController {
                     LocalDate.parse(joiningDate));
         }
 
-        // IMAGE SAFE
 
         if(image != null &&
            !image.isEmpty()) {
@@ -157,10 +151,6 @@ public class EmployeeController {
                 .saveEmployee(employee);
     }
 
-    // =========================
-    // GET ALL EMPLOYEES
-    // =========================
-
     @GetMapping
 
     public List<EmployeeDTO>
@@ -169,10 +159,6 @@ public class EmployeeController {
         return employeeService
                 .getAllEmployees();
     }
-
-    // =========================
-    // GET EMPLOYEE BY ID
-    // =========================
 
     @GetMapping("/{id}")
 
@@ -184,10 +170,6 @@ public class EmployeeController {
         return employeeService
                 .getEmployeeById(id);
     }
-
-    // =========================
-    // UPDATE EMPLOYEE
-    // =========================
 
     @PutMapping("/{id}")
 
@@ -201,10 +183,6 @@ public class EmployeeController {
         return employeeService
                 .updateEmployee(id, employee);
     }
-
-    // =========================
-    // DELETE EMPLOYEE
-    // =========================
 
     @DeleteMapping("/{id}")
 
@@ -231,10 +209,6 @@ public class EmployeeController {
                 .searchEmployee(keyword);
     }
 
-    // =========================
-    // FILTER BY STATUS
-    // =========================
-
     @GetMapping("/status")
 
     public List<Employee>
@@ -245,10 +219,6 @@ public class EmployeeController {
         return employeeService
                 .getEmployeesByStatus(status);
     }
-
-    // =========================
-    // PAGINATION
-    // =========================
 
     @GetMapping("/page")
 

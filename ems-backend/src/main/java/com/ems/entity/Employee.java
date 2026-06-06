@@ -169,5 +169,4 @@ public class Employee {
 		this.department = department;
 	}
 
-    // Getters and Setters
 }

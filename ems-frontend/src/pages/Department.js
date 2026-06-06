@@ -159,8 +159,6 @@ function Department() {
         Department Management
       </h1>
 
-      {/* Cards */}
-
       <div className="department-cards">
 
        <div className="department-card">
@@ -188,8 +186,6 @@ function Department() {
           </div>
 
       </div>
-
-      {/* Form */}
 
       <div className="form-box">
 
@@ -231,8 +227,6 @@ function Department() {
         </button>
 
       </div>
-
-      {/* Table */}
 
       <div className="table-container">
 

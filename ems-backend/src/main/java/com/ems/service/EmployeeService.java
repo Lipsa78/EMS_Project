@@ -18,7 +18,6 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository repo;
 
-    // ENTITY → DTO CONVERSION
     private EmployeeDTO convertToDTO(Employee employee) {
 
         EmployeeDTO dto = new EmployeeDTO();
@@ -37,7 +36,6 @@ public class EmployeeService {
         dto.setProfileImage(employee.getProfileImage());
         dto.setStatus(employee.getStatus());
 
-        // Department Name
         if (employee.getDepartment() != null) {
             dto.setDepartmentName(
                     employee.getDepartment().getDepartmentName());
@@ -46,7 +44,6 @@ public class EmployeeService {
         return dto;
     }
 
-    // GET ALL EMPLOYEES
     public List<EmployeeDTO> getAllEmployees() {
 
         List<Employee> employees = repo.findAll();
@@ -56,7 +53,6 @@ public class EmployeeService {
                 .toList();
     }
 
-    // GET EMPLOYEE BY ID
     public EmployeeDTO getEmployeeById(Long id) {
 
         Employee employee = repo.findById(id)
@@ -66,13 +62,11 @@ public class EmployeeService {
 
         return convertToDTO(employee);
     }
-
-    // SAVE EMPLOYEE
+    
     public Employee saveEmployee(Employee employee) {
         return repo.save(employee);
     }
 
-    // UPDATE EMPLOYEE
     public Employee updateEmployee(
             Long id,
             Employee employee) {
@@ -122,7 +116,6 @@ public class EmployeeService {
         return repo.save(existingEmployee);
     }
 
-    // DELETE EMPLOYEE
     public String deleteEmployee(Long id) {
 
         Employee employee =
@@ -136,7 +129,6 @@ public class EmployeeService {
         return "Employee Deleted Successfully";
     }
 
-    // SEARCH EMPLOYEE
     public List<Employee> searchEmployee(
             String keyword) {
 
@@ -144,7 +136,6 @@ public class EmployeeService {
                 keyword);
     }
 
-    // FILTER EMPLOYEE
     public List<Employee> getEmployeesByStatus(
             String status) {
 

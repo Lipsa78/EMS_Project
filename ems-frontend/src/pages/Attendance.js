@@ -4,11 +4,7 @@ import axios from "axios";
 
 const Attendance = () => {
 
-  // TOKEN localStorage ru neuchi
-
   const token = localStorage.getItem("token");
-
-  // CHECK-IN FUNCTION
 
   const checkIn = async () => {
  console.log("Button Clicked");

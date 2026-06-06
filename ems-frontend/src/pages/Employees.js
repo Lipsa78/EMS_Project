@@ -7,10 +7,6 @@ import { FaUsers, FaUserCheck, FaUserTimes } from "react-icons/fa";
 
 function Employees() {
 
-  // =========================
-  // STATES
-  // =========================
-
   const navigate = useNavigate();
 
   const [employees, setEmployees] = useState([]);
@@ -39,10 +35,6 @@ function Employees() {
       status: "ACTIVE",
       image: null
     });
-
-  // =========================
-  // FETCH EMPLOYEES
-  // =========================
 
   useEffect(() => {
 
@@ -82,10 +74,6 @@ function Employees() {
     }
   };
 
-  // =========================
-  // HANDLE INPUT CHANGE
-  // =========================
-
   const handleChange = (e) => {
 
     const { name, value } =
@@ -111,10 +99,6 @@ function Employees() {
     }
   };
 
-  // =========================
-  // HANDLE IMAGE CHANGE
-  // =========================
-
   const handleImageChange = (e) => {
 
     const file =
@@ -139,10 +123,6 @@ function Employees() {
       });
     }
   };
-
-  // =========================
-  // ADD EMPLOYEE
-  // =========================
 
   const addEmployee = async () => {
 
@@ -281,10 +261,6 @@ function Employees() {
     }
   };
 
-  // =========================
-  // UPDATE EMPLOYEE
-  // =========================
-
   const updateEmployee = async () => {
 
   try {
@@ -339,9 +315,6 @@ function Employees() {
     alert("Update Failed");
   }
 };
-  // =========================
-  // DELETE EMPLOYEE
-  // =========================
 
   const deleteEmployee = async (id) => {
 
@@ -374,10 +347,6 @@ function Employees() {
     }
   };
 
-  // =========================
-  // SEARCH EMPLOYEE
-  // =========================
-
   const searchEmployee = async () => {
 
     try {
@@ -405,10 +374,6 @@ function Employees() {
       console.log(error);
     }
   };
-
-  // =========================
-  // FILTER EMPLOYEE
-  // =========================
 
   const filterEmployee =
     async (status) => {

@@ -4,8 +4,6 @@ import axios from "axios";
 
 const LeaveRequest = () => {
 
-  // FORM DATA
-
   const [leaveData, setLeaveData] = useState({
 
     employee: {
@@ -21,15 +19,9 @@ const LeaveRequest = () => {
     reason: ""
   });
 
-  // ALL LEAVES
-
   const [leaves, setLeaves] = useState([]);
 
-  // TOKEN
-
   const token = localStorage.getItem("token");
-
-  // HANDLE INPUT CHANGE
 
   const handleChange = (e) => {
 
@@ -43,8 +35,6 @@ const LeaveRequest = () => {
     });
   };
 
-  // HANDLE EMPLOYEE ID
-
   const handleEmployeeId = (e) => {
 
     setLeaveData({
@@ -56,8 +46,6 @@ const LeaveRequest = () => {
       }
     });
   };
-
-  // GET ALL LEAVES
 
   const getAllLeaves = async () => {
 
@@ -82,15 +70,11 @@ const LeaveRequest = () => {
     }
   };
 
-  // LOAD LEAVES ON PAGE LOAD
-
   useEffect(() => {
 
     getAllLeaves();
 
   }, []);
-
-  // APPLY LEAVE
 
   const applyLeave = async () => {
 
@@ -113,11 +97,7 @@ const LeaveRequest = () => {
 
       console.log(response.data);
 
-      // REFRESH LEAVE LIST
-
       getAllLeaves();
-
-      // CLEAR FORM
 
       setLeaveData({
 
@@ -141,8 +121,6 @@ const LeaveRequest = () => {
       alert("Error Applying Leave");
     }
   };
-
-  // APPROVE LEAVE
 
   const approveLeave = async (id) => {
 
@@ -170,8 +148,6 @@ const LeaveRequest = () => {
       console.error(error);
     }
   };
-
-  // REJECT LEAVE
 
   const rejectLeave = async (id) => {
 
@@ -206,8 +182,6 @@ const LeaveRequest = () => {
 
       <h2>Apply Leave</h2>
 
-      {/* EMPLOYEE ID */}
-
       <input
         type="number"
         placeholder="Employee ID"
@@ -216,8 +190,6 @@ const LeaveRequest = () => {
       />
 
       <br /><br />
-
-      {/* LEAVE TYPE */}
 
       <input
         type="text"
@@ -229,8 +201,6 @@ const LeaveRequest = () => {
 
       <br /><br />
 
-      {/* START DATE */}
-
       <input
         type="date"
         name="startDate"
@@ -239,8 +209,6 @@ const LeaveRequest = () => {
       />
 
       <br /><br />
-
-      {/* END DATE */}
 
       <input
         type="date"
@@ -251,8 +219,6 @@ const LeaveRequest = () => {
 
       <br /><br />
 
-      {/* REASON */}
-
       <textarea
         name="reason"
         placeholder="Reason"
@@ -262,8 +228,6 @@ const LeaveRequest = () => {
 
       <br /><br />
 
-      {/* APPLY BUTTON */}
-
       <button onClick={applyLeave}>
 
         Apply Leave
@@ -271,8 +235,6 @@ const LeaveRequest = () => {
       </button>
 
       <hr />
-
-      {/* ALL LEAVES */}
 
       <h2>All Leaves</h2>
 
