@@ -26,10 +26,6 @@ export default function Login(){
             <div className="iw"><FiLock className="ii"/><input className="form-control" type={show?'text':'password'} value={form.password} onChange={e=>setForm({...form,password:e.target.value})} required/><button type="button" className="ie" onClick={()=>setShow(!show)}>{show?<FiEyeOff/>:<FiEye/>}</button></div></div>
           <button className="btn btn-primary btn-lg lb-btn" disabled={loading}>{loading?'Signing in…':'Sign In'}</button>
         </form>
-        <div className="lhint">
-          <div className="hr"><span className="hb a">Admin</span><span>admin@ems.com / Admin@123</span></div>
-          <div className="hr"><span className="hb e">Employee</span><span>Credentials set by admin</span></div>
-        </div>
       </div></div>
     </div></>);
 }
