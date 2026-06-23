@@ -24,4 +24,4 @@ export default function EmpDashboard(){
       </div>
     </div>
   </div>);
-}
+  }
